@@ -39,6 +39,10 @@ footer {
     background-color: #836953;
 }
 
+.nav-item > a:hover {
+    color: black;
+}
+
 .active > a {
     color: #fff !important;
 }
