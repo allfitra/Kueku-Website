@@ -39,10 +39,14 @@ footer {
     background-color: #836953;
 }
 
-.nav-item > a:hover {
+.nav-link:hover {
     color: black;
 }
 
 .active > a {
     color: #fff !important;
+}
+
+.borderless {
+    border: none;
 }

@@ -30,3 +30,9 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
+// Cart
+Route::get('/cart', function () {
+    return view('cart', [
+        'title' => 'cart'
+    ]);
+});

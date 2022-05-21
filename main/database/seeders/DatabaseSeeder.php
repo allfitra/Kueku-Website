@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +16,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        DB::table('users')->insert([
+            'name' => 'Fozan',
+            'email' => 'test@gmail.com',
+            'contact' => '081314151617',
+            'password' => Hash::make('password')
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        DB::table('product')->insert([
+            'nama' => 'Kue Putu',
+            'toko' => 'Toko Kue Putu',
+            'deskripsi' => 'Ini adalah kue putu, paling enak.',
+            'gambar' => '',
+            'harga' => '15.000',
+            'terjual' => 0
+        ]);
+
+        DB::table('product')->insert([
+            'nama' => 'Kue Pancong',
+            'toko' => 'Toko Kue Pancong',
+            'deskripsi' => 'Ini adalah kue pancong, paling enak.',
+            'gambar' => '',
+            'harga' => '29.000',
+            'terjual' => 0
+        ]);
     }
 }
