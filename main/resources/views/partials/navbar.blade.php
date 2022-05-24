@@ -8,15 +8,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto fw-bold">
-                <li class="nav-item px-2 {{ $title === 'home' ? 'active' : '' }}">
-                    <a class="nav-link" href="/">HOME</a>
-                </li>
-                <li class="nav-item px-2 {{ $title === 'order' ? 'active' : '' }}">
-                    <a class="nav-link" href="/order">ORDER</a>
-                </li>
-                <li class="nav-item px-2 {{ $title === 'about' ? 'active' : '' }}">
-                    <a class="nav-link" href="/about">ABOUT US</a>
-                </li>
+                <div class="input-group">
+                    <input type="search" class="form-control-secondary rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="button" class="btn btn-outline-secondary">search</button>
+                </div>
             </ul>
 
             @auth
