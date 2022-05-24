@@ -20,9 +20,18 @@
             </ul>
 
             @auth
+                @php $total_barang = 0; @endphp
                 <ul class="navbar-nav dropdown ml-auto fw-bold">
+                    @if (session('cart'))
+                        @foreach (session('cart') as $id => $details)
+                            @php $total_barang += $details['jumlah']; @endphp
+                        @endforeach
+                    @endif
+
                     <li class="nav-item px-2 {{ $title === 'cart' ? 'active' : '' }}">
-                        <a class="nav-link" href="/cart"><i class="bi bi-cart-check"></i> Cart</a>
+                        <a class="nav-link" href="/cart"><i class="bi bi-cart-check"></i> Cart
+                            ({{ $total_barang }})
+                        </a>
                     </li>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
