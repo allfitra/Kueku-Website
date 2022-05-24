@@ -16,12 +16,6 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('home', [
-        'title' => 'home'
-    ]);
-});
-
 
 // Register
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
@@ -33,6 +27,6 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
 // Cart dan Order
-Route::get('/order', [ProductController::class, 'index']);
+Route::get('/', [ProductController::class, 'index']);
 Route::get('/cart', [ProductController::class, 'cart']);
-Route::get('/order/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add_to_cart');
+Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add_to_cart');
