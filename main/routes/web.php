@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegisterController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,12 +16,6 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('home', [
-        'title' => 'home'
-    ]);
-});
-
 
 // Register
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
@@ -30,9 +26,7 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-// Cart
-Route::get('/cart', function () {
-    return view('cart', [
-        'title' => 'cart'
-    ]);
-});
+// Cart dan Order
+Route::get('/', [ProductController::class, 'index']);
+Route::get('/cart', [ProductController::class, 'cart']);
+Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add_to_cart');
