@@ -131,6 +131,14 @@
 
 
     <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "cart",
+                context: document.body,
+            });
+        });
+
+
         // Script untuk Update barang
         $(".update-add").click(function(e) {
             e.preventDefault();
