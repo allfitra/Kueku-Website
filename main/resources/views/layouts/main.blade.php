@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login-signup.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    {{-- Script Ajax --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>

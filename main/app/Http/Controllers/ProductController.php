@@ -45,4 +45,37 @@ class ProductController extends Controller
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Barang ditambahkan ke keranjang!');
     }
+
+
+    public function remove(Request $request)
+    {
+        if ($request->id) {
+            $cart = session()->get('cart');
+            if (isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+            session()->flash('success', 'Barang dihapus dari keranjang!');
+        }
+    }
+
+
+    public function removeAll()
+    {
+        session()->forget('cart');
+    }
+
+
+    public function update(Request $request)
+    {
+        if ($request->id && $request->jumlah) {
+            $cart = session()->get('cart');
+            if ($request->op === "add") {
+                $cart[$request->id]["jumlah"]++;
+            } else if ($request->op === "drop") {
+                $cart[$request->id]["jumlah"]--;
+            }
+            session()->put('cart', $cart);
+        }
+    }
 }

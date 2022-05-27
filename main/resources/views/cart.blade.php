@@ -1,9 +1,26 @@
 @extends('layouts.main')
 
 @section('container')
+    <style>
+        .btn:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+    </style>
+
     <div class="row">
         <div class="col-md-8">
-            <h3 class="text-dark pb-3">Keranjang</h3>
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="text-dark pb-1">Keranjang</h3>
+                </div>
+                <div class="col-md-4 text-end my-auto">
+                    <button class="btn btn-sm btn-danger remove-all" style="text-decoration: none"><i
+                            class="bi bi-trash-fill"></i>
+                        <small>Hapus Semua</small></button>
+                </div>
+            </div>
 
             @php
                 $total_harga = 0;
@@ -34,11 +51,27 @@
                             </div>
 
                             <div class="text-end">
-                                <button class="btn"><i class="bi bi-dash-circle lead"></i></button>
-                                <span> {{ $details['jumlah'] }} </span>
-                                <button class="btn"><i class="bi bi-plus-circle lead"></i></button>
+                                @if ($details['jumlah'] === 1)
+                                    <button class="btn update-drop" disabled><i class="bi bi-dash-circle lead"></i></button>
+                                    <input type="number" value="{{ $details['jumlah'] }}" class="form-control quantity"
+                                        hidden />
+                                    <span>{{ $details['jumlah'] }}</span>
+                                    <button class="btn update-add"><i class="bi bi-plus-circle lead"></i></button>
+                                @elseif ($details['jumlah'] === 999)
+                                    <button class="btn update-drop"><i class="bi bi-dash-circle lead"></i></button>
+                                    <input type="number" value="{{ $details['jumlah'] }}" class="form-control quantity"
+                                        hidden />
+                                    <span>{{ $details['jumlah'] }}</span>
+                                    <button class="btn update-add" disabled><i class="bi bi-plus-circle lead"></i></button>
+                                @else
+                                    <button class="btn update-drop"><i class="bi bi-dash-circle lead"></i></button>
+                                    <input type="number" value="{{ $details['jumlah'] }}" class="form-control quantity"
+                                        hidden />
+                                    <span>{{ $details['jumlah'] }}</span>
+                                    <button class="btn update-add"><i class="bi bi-plus-circle lead"></i></button>
+                                @endif
 
-                                <button class="btn"><i class="bi bi-trash lead remove-from-cart"></i></button>
+                                <button class="btn remove-from-cart"><i class="bi bi-trash lead"></i></button>
                             </div>
 
                         </div>
@@ -96,5 +129,86 @@
         </div>
     </div>
 
-    <script></script>
+
+    <script>
+        // Script untuk Update barang
+        $(".update-add").click(function(e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            $.ajax({
+                url: '{{ route('update_cart') }}',
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: ele.closest("div.card").attr("data-id"),
+                    jumlah: ele.closest("div.card").find(".quantity").val(),
+                    op: "add"
+                },
+                success: function(response) {
+                    window.location.reload();
+                }
+            });
+        });
+
+        $(".update-drop").click(function(e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            $.ajax({
+                url: '{{ route('update_cart') }}',
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: ele.closest("div.card").attr("data-id"),
+                    jumlah: ele.closest("div.card").find(".quantity").val(),
+                    op: "drop"
+                },
+                success: function(response) {
+                    window.location.reload();
+                }
+            });
+        });
+
+
+        // Script untuk Remove barang
+        $(".remove-from-cart").click(function(e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            if (confirm("Yakin ingin menghapus produk dari keranjang?")) {
+                $.ajax({
+                    url: '{{ route('remove_from_cart') }}',
+                    method: "DELETE",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: ele.closest("div.card").attr("data-id")
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+
+        $(".remove-all").click(function(e) {
+            e.preventDefault();
+
+            if (confirm("Yakin ingin menghapus semua barang di keranjang?")) {
+                $.ajax({
+                    url: '{{ route('remove_all') }}',
+                    method: "DELETE",
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
