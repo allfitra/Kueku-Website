@@ -30,3 +30,6 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/', [ProductController::class, 'index']);
 Route::get('/cart', [ProductController::class, 'cart']);
 Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add_to_cart');
+Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove_from_cart');
+Route::delete('remove-all', [ProductController::class, 'removeAll'])->name('remove_all');
+Route::patch('update-cart', [ProductController::class, 'update'])->name('update_cart');
