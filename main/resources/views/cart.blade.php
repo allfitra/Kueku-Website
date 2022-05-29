@@ -39,8 +39,8 @@
                             <div class="row">
                                 <div class="col-md-8 my-auto">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="checkboxAll">
+                                        <input class="form-check-input" type="checkbox" name="flexRadioDefault"
+                                            id="checkboxAll" checked>
                                         <label class="form-check-label" for="checkboxAll">
                                             <h5 class="card-title">{{ $toko }}</h5>
                                         </label>
@@ -50,8 +50,6 @@
                                     <button class="btn btn-light remove-shop"><i class="bi bi-trash-fill"></i></button>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
@@ -63,8 +61,9 @@
                             @endphp
 
                             <li class="list-group-item" data-id="{{ $id }}">
-                                <input class="form-check-input" type="checkbox" value="" id="checkbox">
-                                <label class="form-check-label" for="checkboxJS"></label>
+                                <input class="form-check-input checkbox" type="checkbox" value="" id="{{ $id }}"
+                                    checked>
+                                <label class="form-check-label" for="{{ $id }}"></label>
 
                                 <small class="card-text fw-bold"><i class="bi bi-geo-alt-fill text-danger"></i>
                                     {{ $details['toko'] }}</small>
@@ -160,7 +159,8 @@
                             <p class="card-text">Rp. {{ number_format($total_harga, 0, '', '.') }}</p>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-success w-100"><i class="bi bi-cart-check"></i> Beli</a>
+                    <a href="/shipment" class="btn btn-success w-100 {{ session('cart') ? '' : 'disabled' }}"><i
+                            class="bi bi-cart-check"></i> Beli</a>
                 </div>
             </div>
         </div>
@@ -175,6 +175,22 @@
                 context: document.body,
             });
         });
+
+        let arr = [];
+
+        $(".checkbox").click((e) => {
+            let id = e.currentTarget.id;
+
+            arr.indexOf(id) === -1 ? (arr.push(id)) : (arr = arr.filter((item) => item !== id));
+
+            console.log(arr);
+            arr.forEach((item) => {
+
+
+                console.log(item);
+            });
+        });
+
 
 
         // Script untuk Update barang

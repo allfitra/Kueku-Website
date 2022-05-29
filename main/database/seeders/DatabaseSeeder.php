@@ -45,28 +45,28 @@ class DatabaseSeeder extends Seeder
         $products = [
             [
                 'nama' => 'Kue Putu',
-                'toko' => 'Toko Kue Putu',
+                'toko' => 'Toko Kue A',
                 'deskripsi' => 'Ini adalah kue putu, paling enak.',
                 'gambar' => 'kue-putu.jpg',
                 'harga' => 15000,
             ],
             [
                 'nama' => 'Kue Pancong',
-                'toko' => 'Toko Kue Pancong',
+                'toko' => 'Toko Kue A',
                 'deskripsi' => 'Ini adalah kue pancong, paling enak.',
                 'gambar' => 'logo-kueku.png',
                 'harga' => 29000,
             ],
             [
                 'nama' => 'Kue Bugis',
-                'toko' => 'Toko Kue Bugis',
+                'toko' => 'Toko Kue B',
                 'deskripsi' => 'Ini adalah kue Bugis, paling enak.',
                 'gambar' => 'logo-kueku.png',
                 'harga' => 20000,
             ],
             [
                 'nama' => 'Kue Bolu',
-                'toko' => 'Toko Kue Bolu',
+                'toko' => 'Toko Kue B',
                 'deskripsi' => 'Ini adalah kue bolu, paling enak.',
                 'gambar' => 'kue-putu.jpg',
                 'harga' => 50000,
