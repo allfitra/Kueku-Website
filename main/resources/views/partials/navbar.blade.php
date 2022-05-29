@@ -7,6 +7,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+
             @if (request()->is('/'))
                 <ul class="navbar-nav mx-auto fw-bold">
                     <div class="input-group">
@@ -19,12 +20,15 @@
                 <ul class="navbar-nav mx-auto fw-bold">
                 </ul>
             @endif
+
             @auth
                 @php $total_barang = 0; @endphp
                 <ul class="navbar-nav dropdown ml-auto fw-bold">
                     @if (session('cart'))
-                        @foreach (session('cart') as $id => $details)
-                            @php $total_barang += $details['jumlah']; @endphp
+                        @foreach (session('cart') as $toko => $barang)
+                            @foreach ($barang as $id => $details)
+                                @php $total_barang += $details['jumlah']; @endphp
+                            @endforeach
                         @endforeach
                     @endif
 
