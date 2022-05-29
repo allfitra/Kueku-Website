@@ -7,6 +7,11 @@
             box-shadow: none;
         }
 
+        .shop-name {
+            background-color: #836953;
+            color: #fff;
+        }
+
     </style>
 
     <div class="row">
@@ -28,54 +33,84 @@
             @endphp
 
             @if (session('cart'))
-                @foreach (session('cart') as $id => $details)
-                    @php
-                        $total_harga += $details['harga'] * $details['jumlah'];
-                        $total_barang += $details['jumlah'];
-                    @endphp
-
-                    <div class="card shadow-sm mb-2" data-id="{{ $id }}">
-                        <div class="card-body ml-2">
-                            <small class="card-text fw-bold"><i class="bi bi-geo-alt-fill text-danger"></i>
-                                {{ $details['toko'] }}</small>
-
-                            <div class="row my-3">
-                                <div class="col-md-2">
-                                    <img src="{{ asset('img/' . $details['gambar']) }}" alt="{{ $details['nama'] }}"
-                                        width="100">
+                @foreach (session('cart') as $toko => $barang)
+                    <div class="card shadow-sm mb-1 shop-name" nama-toko="{{ $toko }}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8 my-auto">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="checkboxAll">
+                                        <label class="form-check-label" for="checkboxAll">
+                                            <h5 class="card-title">{{ $toko }}</h5>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col-md-10 my-auto">
-                                    <p>{{ $details['nama'] }}</p>
-                                    <p class="fw-bold">Rp. {{ number_format($details['harga'], 0, '', '.') }}</p>
+                                <div class="col-md-4 text-end my-auto">
+                                    <button class="btn btn-light remove-shop"><i class="bi bi-trash-fill"></i></button>
                                 </div>
                             </div>
 
-                            <div class="text-end">
-                                @if ($details['jumlah'] === 1)
-                                    <button class="btn update-drop" disabled><i class="bi bi-dash-circle lead"></i></button>
-                                    <input type="number" value="{{ $details['jumlah'] }}" class="form-control quantity"
-                                        hidden />
-                                    <span>{{ $details['jumlah'] }}</span>
-                                    <button class="btn update-add"><i class="bi bi-plus-circle lead"></i></button>
-                                @elseif ($details['jumlah'] === 999)
-                                    <button class="btn update-drop"><i class="bi bi-dash-circle lead"></i></button>
-                                    <input type="number" value="{{ $details['jumlah'] }}" class="form-control quantity"
-                                        hidden />
-                                    <span>{{ $details['jumlah'] }}</span>
-                                    <button class="btn update-add" disabled><i class="bi bi-plus-circle lead"></i></button>
-                                @else
-                                    <button class="btn update-drop"><i class="bi bi-dash-circle lead"></i></button>
-                                    <input type="number" value="{{ $details['jumlah'] }}" class="form-control quantity"
-                                        hidden />
-                                    <span>{{ $details['jumlah'] }}</span>
-                                    <button class="btn update-add"><i class="bi bi-plus-circle lead"></i></button>
-                                @endif
-
-                                <button class="btn remove-from-cart"><i class="bi bi-trash lead"></i></button>
-                            </div>
 
                         </div>
                     </div>
+
+                    <ul class="list-group list-group-flush shadow-sm mb-4" nama-toko="{{ $toko }}">
+                        @foreach ($barang as $id => $details)
+                            @php
+                                $total_harga += $details['harga'] * $details['jumlah'];
+                                $total_barang += $details['jumlah'];
+                            @endphp
+
+                            <li class="list-group-item" data-id="{{ $id }}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox">
+                                <label class="form-check-label" for="checkboxJS"></label>
+
+                                <small class="card-text fw-bold"><i class="bi bi-geo-alt-fill text-danger"></i>
+                                    {{ $details['toko'] }}</small>
+
+                                <div class="row my-3">
+                                    <div class="col-md-2">
+                                        <img src="{{ asset('img/' . $details['gambar']) }}" alt="{{ $details['nama'] }}"
+                                            width="100">
+                                    </div>
+                                    <div class="col-md-10 my-auto">
+                                        <p>{{ $details['nama'] }}</p>
+                                        <p class="fw-bold">Rp.
+                                            {{ number_format($details['harga'], 0, '', '.') }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    @if ($details['jumlah'] === 1)
+                                        <button class="btn update-drop" disabled><i
+                                                class="bi bi-dash-circle lead"></i></button>
+                                        <input type="number" value="{{ $details['jumlah'] }}"
+                                            class="form-control quantity" hidden />
+                                        <span>{{ $details['jumlah'] }}</span>
+                                        <button class="btn update-add"><i class="bi bi-plus-circle lead"></i></button>
+                                    @elseif ($details['jumlah'] === 999)
+                                        <button class="btn update-drop"><i class="bi bi-dash-circle lead"></i></button>
+                                        <input type="number" value="{{ $details['jumlah'] }}"
+                                            class="form-control quantity" hidden />
+                                        <span>{{ $details['jumlah'] }}</span>
+                                        <button class="btn update-add" disabled><i
+                                                class="bi bi-plus-circle lead"></i></button>
+                                    @else
+                                        <button class="btn update-drop"><i class="bi bi-dash-circle lead"></i></button>
+                                        <input type="number" value="{{ $details['jumlah'] }}"
+                                            class="form-control quantity" hidden />
+                                        <span>{{ $details['jumlah'] }}</span>
+                                        <button class="btn update-add"><i class="bi bi-plus-circle lead"></i></button>
+                                    @endif
+
+                                    <button class="btn remove-from-cart"><i class="bi bi-trash lead"></i></button>
+                                </div>
+
+                            </li>
+                        @endforeach
+                    </ul>
                 @endforeach
             @else
                 <div class="container">
@@ -94,15 +129,17 @@
                 <div class="card-body">
                     <div class="row">
                         @if (session('cart'))
-                            @foreach (session('cart') as $id => $details)
-                                <div class="col-md-7">
-                                    <small class="card-text">{{ $details['nama'] }} ({{ $details['jumlah'] }}
-                                        item)</small>
-                                </div>
-                                <div class="col-md-5 text-end">
-                                    <small class="card-text">Rp.
-                                        {{ number_format($details['harga'] * $details['jumlah'], 0, '', '.') }}</small>
-                                </div>
+                            @foreach (session('cart') as $toko => $barang)
+                                @foreach ($barang as $id => $details)
+                                    <div class="col-md-7">
+                                        <small class="card-text">{{ $details['nama'] }} ({{ $details['jumlah'] }}
+                                            item)</small>
+                                    </div>
+                                    <div class="col-md-5 text-end">
+                                        <small class="card-text">Rp.
+                                            {{ number_format($details['harga'] * $details['jumlah'], 0, '', '.') }}</small>
+                                    </div>
+                                @endforeach
                             @endforeach
                         @else
                             <div class="col-md-7">
@@ -130,6 +167,7 @@
     </div>
 
 
+    <script src="js/cart.js"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -150,8 +188,9 @@
                 method: "patch",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    id: ele.closest("div.card").attr("data-id"),
-                    jumlah: ele.closest("div.card").find(".quantity").val(),
+                    id: ele.closest("li.list-group-item").attr("data-id"),
+                    jumlah: ele.closest("li.list-group-item").find(".quantity").val(),
+                    toko: ele.closest("ul.list-group").attr("nama-toko"),
                     op: "add"
                 },
                 success: function(response) {
@@ -170,8 +209,9 @@
                 method: "patch",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    id: ele.closest("div.card").attr("data-id"),
-                    jumlah: ele.closest("div.card").find(".quantity").val(),
+                    id: ele.closest("li.list-group-item").attr("data-id"),
+                    jumlah: ele.closest("li.list-group-item").find(".quantity").val(),
+                    toko: ele.closest("ul.list-group").attr("nama-toko"),
                     op: "drop"
                 },
                 success: function(response) {
@@ -193,7 +233,28 @@
                     method: "DELETE",
                     data: {
                         _token: '{{ csrf_token() }}',
-                        id: ele.closest("div.card").attr("data-id")
+                        id: ele.closest("li.list-group-item").attr("data-id"),
+                        toko: ele.closest("ul.list-group").attr("nama-toko")
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+
+        $(".remove-shop").click(function(e) {
+            e.preventDefault();
+
+            var ele = $(this);
+
+            if (confirm("Yakin ingin menghapus semua produk dari toko ini?")) {
+                $.ajax({
+                    url: '{{ route('remove_shop') }}',
+                    method: "DELETE",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        toko: ele.closest("div.card").attr("nama-toko")
                     },
                     success: function(response) {
                         window.location.reload();

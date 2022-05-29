@@ -27,18 +27,31 @@ class ProductController extends Controller
     public function addToCart($id)
     {
         $product = Product::findOrFail($id);
-
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['jumlah']++;
+        if (isset($cart[$product->toko])) {
+            if (isset($cart[$product->toko][$id])) {
+                $cart[$product->toko][$id]['jumlah']++;
+            } else {
+                $cart[$product->toko] += [
+                    $id => [
+                        'nama' => $product->nama,
+                        'toko' => $product->toko,
+                        'harga' => $product->harga,
+                        'gambar' => $product->gambar,
+                        'jumlah' => 1
+                    ]
+                ];
+            }
         } else {
-            $cart[$id] = [
-                'nama' => $product->nama,
-                'toko' => $product->toko,
-                'harga' => $product->harga,
-                'gambar' => $product->gambar,
-                'jumlah' => 1
+            $cart[$product->toko] = [
+                $id => [
+                    'nama' => $product->nama,
+                    'toko' => $product->toko,
+                    'harga' => $product->harga,
+                    'gambar' => $product->gambar,
+                    'jumlah' => 1
+                ]
             ];
         }
 
@@ -51,11 +64,23 @@ class ProductController extends Controller
     {
         if ($request->id) {
             $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
+            if (isset($cart[$request->toko][$request->id])) {
+                unset($cart[$request->toko][$request->id]);
                 session()->put('cart', $cart);
             }
             session()->flash('success', 'Barang dihapus dari keranjang!');
+        }
+    }
+
+    public function removeShop(Request $request)
+    {
+        if ($request->toko) {
+            $cart = session()->get('cart');
+            if (isset($cart[$request->toko])) {
+                unset($cart[$request->toko]);
+                session()->put('cart', $cart);
+            }
+            session()->flash('success', 'Semua produk dari ' . $request->toko . ' dihapus!');
         }
     }
 
@@ -71,9 +96,9 @@ class ProductController extends Controller
         if ($request->id && $request->jumlah) {
             $cart = session()->get('cart');
             if ($request->op === "add") {
-                $cart[$request->id]["jumlah"]++;
+                $cart[$request->toko][$request->id]["jumlah"]++;
             } else if ($request->op === "drop") {
-                $cart[$request->id]["jumlah"]--;
+                $cart[$request->toko][$request->id]["jumlah"]--;
             }
             session()->put('cart', $cart);
         }
