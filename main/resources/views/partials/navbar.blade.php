@@ -1,19 +1,25 @@
-<nav class="navbar navbar-expand-lg bg-light shadow">
+<nav class="navbar navbar-expand-lg bg-light shadow sticky-top flex-md-nowrap mb-3">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="img/logo-kueku.png" alt="Logo" class="my-0" width="110">
+            <img src="/img/logo-kueku.png" alt="Logo" class="my-0" width="110">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto fw-bold">
-                <div class="input-group">
-                    <input type="search" class="form-control-secondary rounded" placeholder="Search" aria-label="Search"
-                        aria-describedby="search-addon" />
-                    <button type="button" class="btn btn-outline-secondary">search</button>
-                </div>
-            </ul>
+
+            @if (request()->is('/'))
+                <ul class="navbar-nav mx-auto fw-bold">
+                    <div class="input-group">
+                        <input type="search" class="form-control-secondary rounded" placeholder="Search"
+                            aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-secondary">search</button>
+                    </div>
+                </ul>
+            @else
+                <ul class="navbar-nav mx-auto fw-bold">
+                </ul>
+            @endif
 
             @auth
                 @php $total_barang = 0; @endphp
@@ -31,12 +37,12 @@
                             ({{ $total_barang }})
                         </a>
                     </li>
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="bi bi-person-fill"></i> {{ auth()->user()->name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/#"><i class="bi bi-person-fill"></i> My Account</a></li>
+                        <li><a class="dropdown-item" href="/account"><i class="bi bi-person-fill"></i> My Account</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
