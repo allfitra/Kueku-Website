@@ -9,7 +9,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto fw-bold">
                 <div class="input-group">
-                    <input type="search" class="form-control-secondary rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <input type="search" class="form-control-secondary rounded" placeholder="Search" aria-label="Search"
+                        aria-describedby="search-addon" />
                     <button type="button" class="btn btn-outline-secondary">search</button>
                 </div>
             </ul>
@@ -18,8 +19,10 @@
                 @php $total_barang = 0; @endphp
                 <ul class="navbar-nav dropdown ml-auto fw-bold">
                     @if (session('cart'))
-                        @foreach (session('cart') as $id => $details)
-                            @php $total_barang += $details['jumlah']; @endphp
+                        @foreach (session('cart') as $toko => $barang)
+                            @foreach ($barang as $id => $details)
+                                @php $total_barang += $details['jumlah']; @endphp
+                            @endforeach
                         @endforeach
                     @endif
 
