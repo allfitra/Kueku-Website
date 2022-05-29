@@ -20,12 +20,8 @@ class GoogleController extends Controller
         try {
             $user = Socialite::driver('google')->stateless()->user();
             
-            $findEmail = User::where('email', $user->email)->first();
             $finduser = User::where('google_id', $user->getId())->first();
 
-            if($findEmail && $finduser) {
-                return redirect('/register')->with('error', 'Alamat Email Telah Digunakan');
-            }
             if($finduser){
                 Auth::login(($finduser));
                 return redirect('/');
