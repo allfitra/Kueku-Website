@@ -1,15 +1,16 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ShipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +27,8 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 // Google Login & register
-Route::get('auth/google',[GoogleController::class, 'redirectToGoogle']);
-Route::get('auth/google/callback',[GoogleController::class, 'callback']);
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'callback']);
 
 // Login
 Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -43,7 +44,10 @@ Route::delete('remove-all', [ProductController::class, 'removeAll'])->name('remo
 Route::delete('remove-shop', [ProductController::class, 'removeShop'])->name('remove_shop');
 Route::patch('update-cart', [ProductController::class, 'update'])->name('update_cart');
 
-// account
+// Shipment
+Route::get('/shipment', [ShipmentController::class, 'index']);
+
+// Account
 Route::get('account/change_password', [PasswordController::class, 'index'])->middleware('auth');
 Route::post('account/change_password', [PasswordController::class, 'update'])->middleware('auth');
 Route::resource('account', AccountController::class, [
@@ -59,7 +63,7 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
- 
+
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email/verification-notification', function (Request $request) {
