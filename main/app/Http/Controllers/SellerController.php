@@ -8,15 +8,17 @@ use App\Models\User;
 
 class SellerController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('sellerRegistration', [
             'title' => null
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validateData = $request->validate([
-            'name' => 'required|min:5|max:225|unique:sellers',
+            'nama' => 'required|min:5|max:225|unique:sellers',
             'provinsi' => 'required|min:3|max:225',
             'kota_kabupaten' => 'required|min:3|max:225',
             'kecamatan' => 'required|min:3|max:225',
