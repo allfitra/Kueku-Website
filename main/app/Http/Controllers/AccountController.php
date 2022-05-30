@@ -21,6 +21,13 @@ class AccountController extends Controller
         ]);
     }
 
+    public function toko(){
+        return view('account.toko', [
+            'title' => null,
+            'user' => User::find(auth()->user()->id)
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -43,6 +43,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/account"><i class="bi bi-person-fill"></i> My Account</a></li>
+                        <li><a class="dropdown-item" href="/seller"><i class="bi bi-shop"></i> Toko Saya</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -51,6 +52,7 @@
                             <li><button class="dropdown-item" type="submit"><i class="bi bi-box-arrow-in-left"></i>
                                     Logout</button></li>
                         </form>
+
                     </ul>
                 </ul>
             @else

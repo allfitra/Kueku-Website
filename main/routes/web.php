@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\SellerCreateController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PasswordController;
@@ -25,6 +26,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Register
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+
+// Seller Register
+Route::get('/seller_register', [SellerCreateController::class, 'index'])->middleware('auth');
+Route::post('/seller_register', [SellerCreateController::class, 'store']);
 
 // Google Login & register
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
@@ -56,6 +61,7 @@ Route::resource('account', AccountController::class, [
     ]
 ])->middleware('auth');
 Route::get('/resend_verify_message', [AccountController::class, 'resend_verify_message'])->middleware('auth');
+Route::get('/toko', [AccountController::class, 'toko'])->middleware('auth');
 
 // Email Verification
 Route::get('/email/verify', function () {
@@ -71,7 +77,5 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('success', 'Link verifikasi telah dikirim ke akun email anda');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
-// Seller Register
-Route::get('/seller_register', [SellerController::class, 'index'])->middleware('auth');
-Route::post('/seller_register', [SellerController::class, 'store'])->middleware('auth');
+// Dashboard seller
+Route::resource('/seller', SellerController::class);
