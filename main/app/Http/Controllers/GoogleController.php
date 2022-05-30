@@ -11,18 +11,23 @@ use Illuminate\Auth\Events\Registered;
 
 class GoogleController extends Controller
 {
-    public function redirectToGoogle() {
+    public function redirectToGoogle()
+    {
         return Socialite::driver('google')->redirect();
     }
 
-    public function callback() {
+    public function callback()
+    {
+
         try {
-            $user = Socialite::driver('google')->stateless()->user();           
+            $user = Socialite::driver('google')->stateless()->user();
+
             $finduser = User::where('google_id', $user->getId())->first();
-            if($finduser){
+
+            if ($finduser) {
                 Auth::login(($finduser));
                 return redirect('/');
-            }else{
+            } else {
                 $newuser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
@@ -34,7 +39,7 @@ class GoogleController extends Controller
                 return redirect()->intended('/');
             }
         } catch (\Throwable $th) {
-            dd($th);
+            dd('gagal');
         }
     }
 }
