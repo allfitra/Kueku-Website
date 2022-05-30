@@ -16,16 +16,9 @@ class GoogleController extends Controller
     }
 
     public function callback() {
-        
         try {
-            $user = Socialite::driver('google')->stateless()->user();
-            
-            $findEmail = User::where('email', $user->email)->first();
+            $user = Socialite::driver('google')->stateless()->user();           
             $finduser = User::where('google_id', $user->getId())->first();
-
-            if($findEmail && $finduser) {
-                return redirect('/register')->with('error', 'Alamat Email Telah Digunakan');
-            }
             if($finduser){
                 Auth::login(($finduser));
                 return redirect('/');
@@ -41,7 +34,7 @@ class GoogleController extends Controller
                 return redirect()->intended('/');
             }
         } catch (\Throwable $th) {
-            dd('gagal');
+            dd($th);
         }
     }
 }
