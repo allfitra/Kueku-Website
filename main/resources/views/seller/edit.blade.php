@@ -6,18 +6,20 @@
             <a class="badge rounded-pill text-bg-secondary text-decoration-none" href="/seller">Kembali</a>
             <img src="/img/logo-kueku.png" class="rounded mx-auto d-block text-center mt-0" alt="..."
                 style="max-width: 120px">
-            <p class="text-center border-bottom fw-bold mt-2">Tambah Produk</p>
+            <p class="text-center border-bottom fw-bold mt-2">Ubah Produk</p>
             @if (session()->has('success'))
                 <div class="alert alert-success py-1 text-center" role="alert">
                     <small>{{ session('success') }}</small>
                 </div>
             @endif
-            <form action="/seller" method="POST" enctype="multipart/form-data">
+            <form action="/seller/{{ $product->id }}" method="POST" enctype="multipart/form-data">
+                @method('put')
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label fw-bold"><small>Nama Produk</small></label>
                     <input type="text" class="form-control form-input input-placeholder @error('nama') is-invalid @enderror"
-                        id="name" name="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Produk">
+                        id="name" name="nama" value="{{ old('nama', $product->nama) }}"
+                        placeholder="Masukkan Nama Produk">
                     @error('nama')
                         <div id="validationServer03Feedback" class="invalid-feedback">
                             {{ $message }}
@@ -28,7 +30,8 @@
                     <label for="name" class="form-label fw-bold"><small>Deskripsi Produk</small></label>
                     <input type="text"
                         class="form-control form-input input-placeholder @error('deskripsi') is-invalid @enderror" id="name"
-                        name="deskripsi" value="{{ old('deskripsi') }}" placeholder="Masukkan Deskripsi Produk">
+                        name="deskripsi" value="{{ old('deskripsi', $product->deskripsi) }}"
+                        placeholder="Masukkan Deskripsi Produk">
                     @error('deskripsi')
                         <div id="validationServer03Feedback" class="invalid-feedback">
                             {{ $message }}
@@ -41,7 +44,7 @@
                         <label for="name" class="form-label fw-bold"><small>Harga</small></label>
                         <input type="text"
                             class="form-control form-input input-placeholder @error('harga') is-invalid @enderror" id="name"
-                            name="harga" value="{{ old('harga') }}" placeholder="Harga Produk">
+                            name="harga" value="{{ old('harga', $product->harga) }}" placeholder="Harga Produk">
                         @error('harga')
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 {{ $message }}
@@ -69,7 +72,8 @@
                         <label for="name" class="form-label fw-bold"><small>Jumlah</small></label>
                         <input type="text"
                             class="form-control form-input input-placeholder @error('jumlah') is-invalid @enderror"
-                            id="name" name="jumlah" value="{{ old('jumlah') }}" placeholder="Jumlah Produk">
+                            id="name" name="jumlah" value="{{ old('jumlah', $product->jumlah) }}"
+                            placeholder="Jumlah Produk">
                         @error('jumlah')
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 {{ $message }}
@@ -90,7 +94,7 @@
 
                 <div class="col text-center">
                     <button type="submit" class="btn btn-primary py-2 mt-2 shadow-none"
-                        style="background-color:#836953 "><small>Buat</small></button>
+                        style="background-color:#836953 "><small>Ubah</small></button>
                 </div>
             </form>
         </div>

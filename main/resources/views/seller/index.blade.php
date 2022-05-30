@@ -26,21 +26,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td scope="row">1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td class="text-center">
-                            <a class="badge bg-info" href="/seller"><span data-feather="eye"></span></a>
-                            <a class="badge bg-warning" href="/seller/edit"><span data-feather="edit"></span></a>
-                            <form class="d-inline" action="/seller" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button class="badge bg-danger border-0" onclick="return confirm('are You Sure?')"><span
-                                        data-feather="x-circle"></span></button>
-                            </form>
-                        </td>
-                    </tr>
+                    @foreach ($products as $product)
+                        <tr>
+                            <td scope="row">{{ $loop->iteration }}</td>
+                            <td>{{ $product->nama }}</td>
+                            <td>{{ $product->kategori }}</td>
+                            <td class="text-center">
+                                <a class="badge bg-info" href="/seller/{{ $product->id }}"><span
+                                        data-feather="eye"></span></a>
+                                <a class="badge bg-warning" href="/seller/{{ $product->id }}/edit"><span
+                                        data-feather="edit"></span></a>
+                                <form class="d-inline" action="/seller/{{ $product->id }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="badge bg-danger border-0" onclick="return confirm('are You Sure?')"><span
+                                            data-feather="x-circle"></span></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
 
 
                 </tbody>

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('alamat_lengkap');
             $table->string('contact');
             $table->string('logo')->nullable();
-            $table->float('income', 8, 2);
+            $table->float('income', 8, 2)->nullable();
         });
     }
 

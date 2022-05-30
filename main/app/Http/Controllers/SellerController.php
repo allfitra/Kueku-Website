@@ -18,9 +18,10 @@ class SellerController extends Controller
         if(! Seller::where('user_id', auth()->user()->id)->exists()){
             return redirect('/toko')->with('error', 'Anda harus melakukan registrasi toko terlebih dahulu');
         }
-
+        $seller_id = Seller::where('user_id', auth()->user()->id)->first()->id;
         return view('seller.index', [
-            'title' => null
+            'title' => null,
+            'products' => Product::where('seller_id', $seller_id)->get()
         ]);
     }
 
@@ -44,20 +45,20 @@ class SellerController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required|min:5|max:225|unique:sellers',
-            'provinsi' => 'required|min:3|max:225',
-            'kota_kabupaten' => 'required|min:3|max:225',
-            'kecamatan' => 'required|min:3|max:225',
-            'alamat_lengkap' => 'required|min:5|max:1200',
-            'contact' => 'required|numeric|digits_between:12,13|unique:sellers',
+        $validatedData = $request->validate([
+            'nama' => 'required|min:5|max:225',
+            'deskripsi' => 'required',
+            'gambar' => 'required|image|file|max:1024',
+            'harga' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'kategori' => 'required',
         ]);
-        $validateData['user_id'] = auth()->user()->id;
-        $validateData['income'] = 0;
-
-        Seller::create($validateData);
-
-        return redirect('/')->with('success', 'Registrasi berhasil! Silahkan Login');
+        $validatedData['seller_id'] = Seller::where('user_id', auth()->user()->id)->first()->id;
+        if($request->file('gambar')) {
+            $validatedData['gambar'] = $request->file('gambar')->store('post-images');
+        }
+        Product::create($validatedData);
+        return redirect('/seller')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
@@ -66,9 +67,12 @@ class SellerController extends Controller
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show(Product $product)
     {
-        //
+        return view('seller.show', [
+            'title' => null,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -77,9 +81,12 @@ class SellerController extends Controller
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function edit(Seller $seller)
+    public function edit(Product $product)
     {
-        //
+        return view('seller.edit', [
+            'title' => null,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -89,9 +96,21 @@ class SellerController extends Controller
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $seller)
+    public function update(Request $request, Product $product)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required|min:5|max:225',
+            'deskripsi' => 'required',
+            'gambar' => 'image|file|max:1024',
+            'harga' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'kategori' => 'required',
+        ]);
+        if($request->file('gambar')) {
+            $validatedData['gambar'] = $request->file('gambar')->store('post-images');
+        }
+        Product::where('id', $product->id)->update($validatedData);
+        return redirect('/seller')->with('success', 'Produk berhasil diupdate');
     }
 
     /**
@@ -100,8 +119,9 @@ class SellerController extends Controller
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $seller)
+    public function destroy(Product $product)
     {
-        //
+        Product::destroy($product->id);
+        return redirect('/seller')->with('success', 'Produk berhasil dihapus');
     }
 }

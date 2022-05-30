@@ -33,16 +33,16 @@
             @endphp
 
             @if (session('cart'))
-                @foreach (session('cart') as $toko => $barang)
-                    <div class="card shadow-sm mb-1 shop-name" nama-toko="{{ $toko }}">
+                @foreach (session('cart') as $id_toko => $barang)
+                    <div class="card shadow-sm mb-1 shop-name" nama-toko="{{ $id_toko }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-8 my-auto">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="flexRadioDefault"
-                                            id="checkboxAll" checked>
+                                        <input class="form-check-input checkbox-all" type="checkbox" name="flexRadioDefault"
+                                            id="checkboxAll" id-toko="{{ $id_toko }}">
                                         <label class="form-check-label" for="checkboxAll">
-                                            <h5 class="card-title">{{ $toko }}</h5>
+                                            <h5 class="card-title">{{ $id_toko }}</h5>
                                         </label>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <ul class="list-group list-group-flush shadow-sm mb-4" nama-toko="{{ $toko }}">
+                    <ul class="list-group list-group-flush shadow-sm mb-4" nama-toko="{{ $id_toko }}">
                         @foreach ($barang as $id => $details)
                             @php
                                 $total_harga += $details['harga'] * $details['jumlah'];
@@ -61,8 +61,8 @@
                             @endphp
 
                             <li class="list-group-item" data-id="{{ $id }}">
-                                <input class="form-check-input checkbox" type="checkbox" value="" id="{{ $id }}"
-                                    checked>
+                                <input class="form-check-input checkbox select-option-{{ $id_toko }}" type="checkbox"
+                                    value="" id="{{ $id }}">
                                 <label class="form-check-label" for="{{ $id }}"></label>
 
                                 <small class="card-text fw-bold"><i class="bi bi-geo-alt-fill text-danger"></i>
@@ -70,8 +70,8 @@
 
                                 <div class="row my-3">
                                     <div class="col-md-2">
-                                        <img src="{{ asset('img/' . $details['gambar']) }}" alt="{{ $details['nama'] }}"
-                                            width="100">
+                                        <img src="{{ asset('storage/' . $details['gambar']) }}"
+                                            alt="{{ $details['nama'] }}" width="100">
                                     </div>
                                     <div class="col-md-10 my-auto">
                                         <p>{{ $details['nama'] }}</p>
@@ -167,7 +167,6 @@
     </div>
 
 
-    <script src="js/cart.js"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -176,21 +175,20 @@
             });
         });
 
-        let arr = [];
 
-        $(".checkbox").click((e) => {
-            let id = e.currentTarget.id;
-
-            arr.indexOf(id) === -1 ? (arr.push(id)) : (arr = arr.filter((item) => item !== id));
-
-            console.log(arr);
-            arr.forEach((item) => {
-
-
-                console.log(item);
-            });
+        // Auto Check untuk Checkbox yang bersangkutan
+        $(".checkbox-all").click(function(e) {
+            var id = $(this).attr("id-toko");
+            if (this.checked) {
+                $(".select-option-" + id).each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(".select-option-" + id).each(function() {
+                    this.checked = false;
+                });
+            }
         });
-
 
 
         // Script untuk Update barang

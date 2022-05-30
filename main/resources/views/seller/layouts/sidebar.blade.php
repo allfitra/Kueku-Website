@@ -2,21 +2,13 @@
     <div class="position-sticky pt-3" style="">
         <ul class="nav flex-column">
             <li class="nav-item mt-5">
-                <a class="nav-link {{ request()->is('account') ? 'active' : '' }}" href="/account">
-                    <i class="bi bi-inboxes"></i>&nbsp;
-                    Toko saya
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('account/*/edit') ? 'active' : '' }}"
-                    href="/account/{{ auth()->user()->id }}/edit">
+                <a class="nav-link {{ request()->is('seller*') ? 'active' : '' }}" href="/seller">
                     <i class="bi bi-bag-plus-fill"></i>&nbsp;
                     Produk Saya
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link {{ request()->is('resend_verify_message') ? 'active' : '' }}"
-                    href="/resend_verify_message">
+                <a class="nav-link {{ request()->is('resend_verify_message') ? 'active' : '' }}">
                     <i class="bi bi-box-seam"></i>&nbsp;
                     Pesanan
                 </a>

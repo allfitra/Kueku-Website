@@ -12,6 +12,7 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +66,9 @@ Route::get('/toko', [AccountController::class, 'toko'])->middleware('auth');
 
 // Email Verification
 Route::get('/email/verify', function () {
-    return view('auth.verify-email');
+    return view('account.emailVerify',[
+        'title' => null
+    ]);
 })->middleware('auth')->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -78,4 +81,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // Dashboard seller
-Route::resource('/seller', SellerController::class);
+Route::resource('/seller', SellerController::class,[
+    'parameters' => [
+        'seller' => 'product'
+    ]
+])->middleware(['auth', 'verified']);
