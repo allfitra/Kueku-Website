@@ -29,11 +29,11 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$product->toko])) {
-            if (isset($cart[$product->toko][$id])) {
-                $cart[$product->toko][$id]['jumlah']++;
+        if (isset($cart[$product->seller_id])) {
+            if (isset($cart[$product->seller_id][$id])) {
+                $cart[$product->seller_id][$id]['jumlah']++;
             } else {
-                $cart[$product->toko] += [
+                $cart[$product->seller_id] += [
                     $id => [
                         'nama' => $product->nama,
                         'toko' => $product->toko,
@@ -44,7 +44,7 @@ class ProductController extends Controller
                 ];
             }
         } else {
-            $cart[$product->toko] = [
+            $cart[$product->seller_id] = [
                 $id => [
                     'nama' => $product->nama,
                     'toko' => $product->toko,

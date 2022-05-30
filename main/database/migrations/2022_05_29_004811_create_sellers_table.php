@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name')->unique();
+            $table->string('nama')->unique();
             $table->foreignId('user_id');
             $table->string('provinsi');
             $table->string('kota_kabupaten');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('alamat_lengkap');
             $table->string('contact');
             $table->string('logo')->nullable();
-            $table->float('income', 8, 2);
+            $table->float('income', 8, 2)->nullable();
         });
     }
 
