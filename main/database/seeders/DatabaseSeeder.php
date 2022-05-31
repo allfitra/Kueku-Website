@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
         $products = [
             [
                 'nama' => 'Kue Putu',
-                'seller_id' => 4,
+                'seller_id' => 1,
                 'toko' => 'Toko Kue A',
                 'deskripsi' => 'Ini adalah kue putu, paling enak.',
                 'gambar' => 'kue-putu.jpg',
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'Kue Pancong',
-                'seller_id' => 4,
+                'seller_id' => 1,
                 'toko' => 'Toko Kue A',
                 'deskripsi' => 'Ini adalah kue pancong, paling enak.',
                 'gambar' => 'kue-putu.jpg',
@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'Kue Bugis',
-                'seller_id' => 4,
+                'seller_id' => 2,
                 'toko' => 'Toko Kue B',
                 'deskripsi' => 'Ini adalah kue Bugis, paling enak.',
                 'gambar' => 'kue-putu.jpg',
@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'Kue Bolu',
-                'seller_id' => 4,
+                'seller_id' => 2,
                 'toko' => 'Toko Kue B',
                 'deskripsi' => 'Ini adalah kue bolu, paling enak.',
                 'gambar' => 'kue-putu.jpg',
@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'Kue Brownis',
-                'seller_id' => 4,
+                'seller_id' => 3,
                 'toko' => 'Toko Kue C',
                 'deskripsi' => 'Ini adalah kue brownis, paling enak.',
                 'gambar' => 'kue-putu.jpg',
@@ -135,7 +135,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'Pudding',
-                'seller_id' => 4,
+                'seller_id' => 3,
                 'toko' => 'Toko Kue C',
                 'deskripsi' => 'Ini adalah pudding, paling enak.',
                 'gambar' => 'kue-putu.jpg',

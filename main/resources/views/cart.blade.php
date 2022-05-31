@@ -34,6 +34,14 @@
 
             @if (session('cart'))
                 @foreach (session('cart') as $id_toko => $barang)
+                    @php
+                        $nama_toko;
+                    @endphp
+                    @foreach ($barang as $id => $details)
+                        @php
+                            $nama_toko = $details['toko'];
+                        @endphp
+                    @endforeach
                     <div class="card shadow-sm mb-1 shop-name" nama-toko="{{ $id_toko }}">
                         <div class="card-body">
                             <div class="row">
@@ -42,7 +50,7 @@
                                         <input class="form-check-input checkbox-all" type="checkbox" name="flexRadioDefault"
                                             id="checkboxAll" id-toko="{{ $id_toko }}">
                                         <label class="form-check-label" for="checkboxAll">
-                                            <h5 class="card-title">{{ $id_toko }}</h5>
+                                            <h5 class="card-title">{{ $nama_toko }}</h5>
                                         </label>
                                     </div>
                                 </div>
