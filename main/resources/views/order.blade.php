@@ -62,7 +62,7 @@
                                     alt="{{ $product->nama }}">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">{{ $product->nama }}</h5>
-                                    <p class="card-text text-success"><small>{{ $product->seller->name }}</small></p>
+                                    <p class="card-text text-success"><small>{{ $product->nama }}</small></p>
                                     <p class="card-text"><small>{{ $product->deskripsi }}</small></p>
                                     <p class="card-text fw-bold text-end">Rp.
                                         {{ number_format($product->harga, 0, '', '.') }}
